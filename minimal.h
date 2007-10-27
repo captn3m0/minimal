@@ -1,6 +1,6 @@
 #define _assert(expr) \
     do if (!(expr)) { \
-        fprintf(stderr, "_assert(%s)\n", #expr); \
+        fprintf(stderr, "%s(%u): _assert(%u:%s)\n", __FILE__, __LINE__, errno, #expr); \
         exit(1); \
     } while (false)
 
@@ -19,6 +19,9 @@
 
 #define _trace() \
     printf("_trace(%s:%u)\n", __FILE__, __LINE__)
+
+#define _not(type) \
+    ((type) ~ (type) 0)
 
 #include <stdio.h>
 #include <stdbool.h>

@@ -7,18 +7,21 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-void *Map(const char *path, size_t *size, bool ro) {
+void *Map(const char *path, size_t offset, size_t size, size_t *psize, bool ro) {
     int fd;
     _syscall(fd = open(path, ro ? O_RDONLY : O_RDWR));
 
-    struct stat stat;
-    _syscall(fstat(fd, &stat));
+    if (size == _not(size_t)) {
+        struct stat stat;
+        _syscall(fstat(fd, &stat));
+        size = stat.st_size;
+    }
 
-    if (size != NULL)
-        *size = stat.st_size;
+    if (psize != NULL)
+        *psize = size;
 
     void *base;
-    _syscall(base = mmap(0, stat.st_size, ro ? PROT_READ : PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0));
+    _syscall(base = mmap(NULL, size, ro ? PROT_READ : PROT_READ | PROT_WRITE, MAP_SHARED, fd, offset));
 
     _syscall(close(fd));
     return base;
