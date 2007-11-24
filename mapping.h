@@ -7,7 +7,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-void *Map(const char *path, size_t offset, size_t size, size_t *psize, bool ro) {
+void *map(const char *path, size_t offset, size_t size, size_t *psize, bool ro) {
     int fd;
     _syscall(fd = open(path, ro ? O_RDONLY : O_RDWR));
 
