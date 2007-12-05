@@ -60,6 +60,12 @@
 #define _not(type) \
     ((type) ~ (type) 0)
 
+#define _breakpoint() \
+    __asm__ { int 0x3 }
+
+#define _unused \
+    __attribute__((unused))
+
 #include <errno.h>
 #include <stdio.h>
 #include <stdbool.h>
