@@ -35,6 +35,9 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#ifndef MINIMAL_MAPPING_H
+#define MINIMAL_MAPPING_H
+
 #include <sys/mman.h>
 
 #include <errno.h>
@@ -63,3 +66,5 @@ void *map(const char *path, size_t offset, size_t size, size_t *psize, bool ro) 
     _syscall(close(fd));
     return base;
 }
+
+#endif/*MINIMAL_MAPPING_H*/

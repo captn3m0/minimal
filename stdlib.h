@@ -35,6 +35,9 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#ifndef MINIMAL_STDLIB_H
+#define MINIMAL_STDLIB_H
+
 #define _assert(expr) \
     do if (!(expr)) { \
         fprintf(stderr, "%s(%u): _assert(%u:%s)\n", __FILE__, __LINE__, errno, #expr); \
@@ -63,7 +66,7 @@
 #define _breakpoint() \
     __asm__ { int 0x3 }
 
-#define _unused \
+#define _disused \
     __attribute__((unused))
 
 #include <errno.h>
@@ -71,3 +74,5 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdint.h>
+
+#endif/*MINIMAL_STDLIB_H*/

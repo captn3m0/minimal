@@ -35,6 +35,9 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#ifndef MINIMAL_SQLITE3_H
+#define MINIMAL_SQLITE3_H
+
 #include <sqlite3.h>
 #include <string.h>
 
@@ -66,3 +69,5 @@ char *sqlite3_column_string(sqlite3_stmt *stmt, int n) {
 bool sqlite3_column_boolean(sqlite3_stmt *stmt, int n) {
     return sqlite3_column_int(stmt, n) != 0;
 }
+
+#endif/*MINIMAL_SQLITE3_H*/
