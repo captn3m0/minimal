@@ -40,11 +40,11 @@
 
 #include "minimal/stdlib.h"
 
-char hexchar(uint8_t value) {
+_disused static char hexchar(uint8_t value) {
     return value < 0x20 || value >= 0x80 ? '.' : value;
 }
 
-void hexdump(const char *mark, const uint8_t *data, size_t size) {
+_disused static void hexdump(const char *mark, const uint8_t *data, size_t size) {
     int i = 0, j;
 
     while (i != size) {
