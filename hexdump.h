@@ -44,28 +44,30 @@ _disused static char hexchar(uint8_t value) {
     return value < 0x20 || value >= 0x80 ? '.' : value;
 }
 
+#define HexWidth_ 12
+
 _disused static void hexdump(const char *mark, const uint8_t *data, size_t size) {
     int i = 0, j;
 
     while (i != size) {
-        if (i % 16 == 0)
+        if (i % HexWidth_ == 0)
             printf("[%s] 0x%.3x:", mark, i);
 
         printf(" %.2x", data[i]);
 
-        if (++i % 16 == 0) {
+        if (++i % HexWidth_ == 0) {
             printf("  ");
-            for (j = i - 16; j != i; ++j)
+            for (j = i - HexWidth_; j != i; ++j)
                 printf("%c", hexchar(data[j]));
             printf("\n");
         }
     }
 
-    if (i % 16 != 0) {
-        for (j = i % 16; j != 16; ++j)
+    if (i % HexWidth_ != 0) {
+        for (j = i % HexWidth_; j != HexWidth_; ++j)
             printf("   ");
         printf("  ");
-        for (j = i / 16 * 16; j != i; ++j)
+        for (j = i / HexWidth_ * HexWidth_; j != i; ++j)
             printf("%c", hexchar(data[j]));
         printf("\n");
     }
