@@ -47,11 +47,11 @@ _disused static char hexchar(uint8_t value) {
 #define HexWidth_ 12
 
 _disused static void hexdump(const char *mark, const uint8_t *data, size_t size) {
-    int i = 0, j;
+    size_t i = 0, j;
 
     while (i != size) {
         if (i % HexWidth_ == 0)
-            printf("[%s] 0x%.3x:", mark, i);
+            printf("[%s] 0x%.3zx:", mark, i);
 
         printf(" %.2x", data[i]);
 
