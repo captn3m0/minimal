@@ -41,7 +41,7 @@
 #include <string.h>
 
 _disused static char *strndup_(const char *src, int len) {
-    char *dst = malloc(len + 1);
+    char *dst = (char *) malloc(len + 1);
     _assert(dst != NULL);
     strncpy(dst, src, len);
     dst[len] = '\0';
