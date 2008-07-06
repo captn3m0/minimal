@@ -38,10 +38,26 @@
 #ifndef MINIMAL_STDLIB_H
 #define MINIMAL_STDLIB_H
 
+#ifdef __i386__
+#define _breakpoint() \
+    __asm__ ("int $0x03")
+#else
+#define _breakpoint()
+#endif
+
+#ifdef __cplusplus
+#define _assert_(e) \
+    throw e
+#else
+#define _assert_(e) \
+    exit(1)
+#endif
+
 #define _assert(expr) \
     do if (!(expr)) { \
         fprintf(stderr, "%s(%u): _assert(%u:%s)\n", __FILE__, __LINE__, errno, #expr); \
-        exit(1); \
+        _breakpoint(); \
+        _assert_(#expr); \
     } while (false)
 
 #define _syscall(expr) \
@@ -63,11 +79,29 @@
 #define _not(type) \
     ((type) ~ (type) 0)
 
-#define _breakpoint() \
-    __asm__ { int 0x3 }
-
 #define _disused \
     __attribute__((unused))
+
+#define _label__(x) _label ## x
+#define _label_(y) _label__(y)
+#define _label _label_(__LINE__)
+
+#define _packed \
+    __attribute__((packed))
+
+#ifdef __cplusplus
+
+template <typename Type_>
+struct Iterator_ {
+    typedef typename Type_::const_iterator Result;
+};
+
+#define _foreach(item, list) \
+    for (bool _stop(true); _stop; ) \
+        for (const __typeof__(list) &_list = (list); _stop; _stop = false) \
+            for (Iterator_<__typeof__(list)>::Result item = _list.begin(); item != _list.end(); ++item)
+
+#endif
 
 #include <errno.h>
 #include <stdio.h>
