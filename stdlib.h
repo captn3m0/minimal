@@ -74,7 +74,7 @@
     for (;;)
 
 #define _trace() \
-    printf("_trace(%s:%u): %s\n", __FILE__, __LINE__, __FUNCTION__)
+    fprintf(stderr, "_trace(%s:%u): %s\n", __FILE__, __LINE__, __FUNCTION__)
 
 #define _not(type) \
     ((type) ~ (type) 0)
