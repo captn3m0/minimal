@@ -79,6 +79,8 @@
 #define _not(type) \
     ((type) ~ (type) 0)
 
+#define _finline \
+    inline __attribute__((always_inline))
 #define _disused \
     __attribute__((unused))
 
