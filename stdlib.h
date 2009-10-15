@@ -60,15 +60,24 @@
         _assert_(#expr); \
     } while (false)
 
-#define _syscall(expr) \
-    do if ((long) (expr) != -1) \
+#define _syscall(expr) ({ \
+    __typeof__(expr) value; \
+    do if ((long) (value = (expr)) != -1) \
         break; \
     else switch (errno) { \
         case EINTR: \
             continue; \
         default: \
             _assert(false); \
-    } while (true)
+    } while (true); \
+    value; \
+})
+
+#define _aprcall(expr) \
+    do { \
+        apr_status_t status((expr)); \
+        _assert(status == APR_SUCCESS); \
+    } while (false)
 
 #define _forever \
     for (;;)
