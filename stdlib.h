@@ -46,8 +46,12 @@
 #endif
 
 #ifdef __cplusplus
+#define _assert___(line) \
+    #line
+#define _assert__(line) \
+    _assert___(line)
 #define _assert_(e) \
-    throw e
+    throw __FILE__ "(" _assert__(__LINE__) "): _assert(" e ")"
 #else
 #define _assert_(e) \
     exit(1)
@@ -55,7 +59,7 @@
 
 #define _assert(expr) \
     do if (!(expr)) { \
-        fprintf(stderr, "%s(%u): _assert(%u:%s)\n", __FILE__, __LINE__, errno, #expr); \
+        fprintf(stderr, "%s(%u): _assert(%s); errno=%u\n", __FILE__, __LINE__, #expr, errno); \
         _breakpoint(); \
         _assert_(#expr); \
     } while (false)
