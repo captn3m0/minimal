@@ -79,8 +79,8 @@
 
 #define _aprcall(expr) \
     do { \
-        apr_status_t status((expr)); \
-        _assert(status == APR_SUCCESS); \
+        apr_status_t _aprstatus((expr)); \
+        _assert(_aprstatus == APR_SUCCESS); \
     } while (false)
 
 #define _forever \
