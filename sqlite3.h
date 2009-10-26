@@ -41,14 +41,12 @@
 #include <sqlite3.h>
 #include <string.h>
 
-#define sqlcall(expr) \
-    do { \
-        int _value = (expr); \
-        if (_value == 0 || (_value >= 100 && _value < 200)) \
-            break; \
-        fprintf(stderr, "%s(%u): sqlcall(%u:%s): %s\n", __FILE__, __LINE__, _value, #expr, sqlite3_errmsg(database_)); \
-        exit(1); \
-    } while (false)
+#define _sqlcall(expr) ({ \
+    __typeof__(expr) _value = (expr); \
+    if (_value != 0 && (_value < 100 || _value >= 200)) \
+        _assert(false, "_sqlcall(%u:%s): %s\n", _value, #expr, sqlite3_errmsg(database_)); \
+    _value; \
+})
 
 int sqlite3_bind_string(sqlite3_stmt *stmt, int n, const char *value) {
     if (value == NULL)

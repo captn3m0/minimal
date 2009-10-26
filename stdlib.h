@@ -65,8 +65,8 @@
     } while (false)
 
 #define _syscall(expr) ({ \
-    __typeof__(expr) value; \
-    do if ((long) (value = (expr)) != -1) \
+    __typeof__(expr) _value; \
+    do if ((long) (_value = (expr)) != -1) \
         break; \
     else switch (errno) { \
         case EINTR: \
@@ -74,7 +74,7 @@
         default: \
             _assert(false); \
     } while (true); \
-    value; \
+    _value; \
 })
 
 #define _aprcall(expr) \
