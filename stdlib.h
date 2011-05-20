@@ -114,7 +114,9 @@ struct Iterator_ {
 #define _foreach(item, list) \
     for (bool _stop(true); _stop; ) \
         for (const __typeof__(list) &_list = (list); _stop; _stop = false) \
-            for (Iterator_<__typeof__(list)>::Result item = _list.begin(); item != _list.end(); ++item)
+            for (Iterator_<__typeof__(list)>::Result _item = _list.begin(); _item != _list.end(); ++_item) \
+                for (bool _suck(true); _suck; ) \
+                    for (const __typeof__(*_item) &item = *_item; _suck; _suck = false)
 
 #endif
 
